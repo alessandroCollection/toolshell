@@ -230,15 +230,34 @@
   .price { max-width: 520px; margin: 60px auto 0; text-align: center; padding: 46px 36px; border-radius: 32px;
            background: linear-gradient(var(--panel), var(--panel)) padding-box, linear-gradient(135deg, var(--a1), var(--a2), var(--a3)) border-box;
            border: 1.5px solid transparent; box-shadow: 0 30px 80px rgba(99,102,241,.25); }
-  .heart { width: 46px; height: 46px; animation: beat 1.6s ease-in-out infinite; }
-  @keyframes beat { 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } 60% { transform: none; } }
-  .free { font-size: 20px; font-weight: 700; margin-top: 14px; }
-  .amount { font-size: 72px; font-weight: 700; letter-spacing: -.04em; }
-  .amount small { font-size: 22px; color: var(--subtle); font-weight: 600; letter-spacing: 0; }
-  .price ul { list-style: none; margin: 22px auto 30px; display: grid; gap: 10px; text-align: left; width: fit-content; color: var(--subtle); }
-  .price li { display: flex; gap: 10px; align-items: center; }
-  .price li svg { width: 18px; height: 18px; flex: none; }
+  .cup { width: 84px; height: 84px; }
+  .cup .steam { animation: steam 2.4s ease-in-out infinite; }
+  @keyframes steam { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: .9; } 100% { opacity: 0; transform: translateY(-6px); } }
+  .beg { color: #CBD5E1; font-size: 17px; line-height: 1.55; margin: 16px auto 26px; max-width: 420px; }
+  .coffees { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .cbtn { cursor: pointer; padding: 14px 6px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid var(--border);
+          display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 700; transition: transform .2s, border-color .2s, background .2s; }
+  .cbtn b { font-size: 24px; } .cbtn span { font-size: 14px; }
+  .cbtn:hover { transform: translateY(-4px) scale(1.04); border-color: rgba(255,154,60,.6); background: rgba(255,154,60,.12); }
   .note { font-size: 14px; color: var(--subtle); margin-top: 18px; }
+  /* modulo chiave */
+  .kform { max-width: 620px; margin: 44px auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left;
+           padding: 30px; border-radius: 28px; background: var(--panel); border: 1px solid var(--border); }
+  .kform .wide { grid-column: 1 / -1; }
+  .kform label span { display: block; font-size: 13px; font-weight: 600; color: var(--subtle); margin-bottom: 6px; }
+  .kform input, .kform textarea { width: 100%; font: inherit; font-size: 16px; color: var(--text); background: #0A0F1E; border: 1px solid #2A3552;
+           border-radius: 12px; padding: 12px 14px; outline: none; transition: border-color .2s, box-shadow .2s; resize: vertical; }
+  .kform input:focus, .kform textarea:focus { border-color: var(--a1); box-shadow: 0 0 0 3px rgba(96,165,250,.2); }
+  .kform input[name=pcid] { font-family: Consolas, "Cascadia Mono", monospace; letter-spacing: .08em; text-transform: uppercase; }
+  .kform .bad { border-color: #F87171; }
+  .kform button { justify-content: center; border: 0; cursor: pointer; font: inherit; font-size: 17px; font-weight: 600; color: #fff; }
+  .kform button:disabled { opacity: .6; cursor: wait; }
+  .kmsg { min-height: 1.4em; text-align: center; font-weight: 600; }
+  .kmsg.ok { color: #4ADE80; } .kmsg.err { color: #F87171; }
+  .hp { display: none; }
+  .author a { color: var(--a1); }
+  .author a:hover { text-decoration: underline; }
+  @media (max-width: 560px) { .kform { grid-template-columns: 1fr; padding: 22px; } .coffees { grid-template-columns: 1fr 1fr; } }
 
   /* ---------- Passi ---------- */
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 60px; text-align: left; }
@@ -381,26 +400,40 @@
   </div>
 </section>
 
+<!-- Gratis + "offrimi un caffè" -->
 <section class="big wrap" id="price">
   <h2 class="rv"><span data-t="p1a"></span><br><span class="grad" data-t="p1b"></span></h2>
-  <p class="rv" data-t="p1p"></p>
   <div class="price rv">
-    <svg class="heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.3C1 8 3.4 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.6 0 6 3.5 4.5 7.2C19.5 16.4 12 21 12 21z" fill="url(#lg-rk)"/></svg>
-    <p class="free grad" data-t="free"></p>
-    <div class="amount"><small data-t="once"></small> <span id="priceValue"></span></div>
-    <ul>
-      <li><svg><use href="#i-ok"/></svg><span data-t="pr1"></span></li>
-      <li><svg><use href="#i-ok"/></svg><span data-t="pr2"></span></li>
-      <li><svg><use href="#i-ok"/></svg><span data-t="pr3"></span></li>
-      <li><svg><use href="#i-ok"/></svg><span data-t="pr4"></span></li>
-    </ul>
-    <a class="btn primary support" href="#"><span data-t="supportBtn"></span></a>
+    <svg class="cup" viewBox="0 0 64 64">
+      <path class="steam" d="M24 18c-3-4 3-6 0-10M32 18c-3-4 3-6 0-10M40 18c-3-4 3-6 0-10" fill="none" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M12 24h36v14a14 14 0 01-14 14h-8a14 14 0 01-14-14z" fill="url(#lg-rk)"/>
+      <path d="M48 28h3a6 6 0 010 12h-3" fill="none" stroke="#FF9A3C" stroke-width="4"/>
+      <ellipse cx="30" cy="56" rx="24" ry="3.5" fill="#334155"/>
+    </svg>
+    <p class="beg" data-t="beg"></p>
+    <div class="coffees" id="coffees">
+      <a class="cbtn" data-amt="1"><b>☕</b><span>1 €</span></a>
+      <a class="cbtn" data-amt="3"><b>☕☕</b><span>3 €</span></a>
+      <a class="cbtn" data-amt="5"><b>🍕</b><span>5 €</span></a>
+      <a class="cbtn" data-amt=""><b>💝</b><span data-t="anyAmt"></span></a>
+    </div>
     <p class="note" data-t="pnote"></p>
   </div>
 </section>
 
+<!-- Ricevi la chiave: modulo che arriva via email all'autore -->
 <section class="big wrap" id="license">
   <h2 class="rv" data-t="lt"></h2>
+  <p class="rv" data-t="ltp"></p>
+  <form class="kform rv" id="kform" novalidate>
+    <label><span data-t="fName"></span><input name="name" required maxlength="60" autocomplete="name"></label>
+    <label><span data-t="fEmail"></span><input name="email" type="email" required maxlength="100" autocomplete="email"></label>
+    <label class="wide"><span data-t="fPc"></span><input name="pcid" required placeholder="XXXX-XXXX-XXXX" maxlength="14" autocomplete="off" spellcheck="false"></label>
+    <label class="wide"><span data-t="fMsg"></span><textarea name="message" rows="3" maxlength="500"></textarea></label>
+    <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+    <button class="btn primary wide" type="submit" id="ksend"><span data-t="fSend"></span></button>
+    <p class="kmsg wide" id="kmsg"></p>
+  </form>
   <div class="steps">
     <div class="step rv"><div class="n">1</div><h3 data-t="l1t"></h3><p data-t="l1"></p></div>
     <div class="step rv"><div class="n">2</div><h3 data-t="l2t"></h3><p data-t="l2"></p></div>
@@ -416,15 +449,16 @@
 </div>
 
 <footer>
-  <div class="wrap"><span>© 2026 Alessandro. All rights reserved.</span><span>Tool Shell 1.6.1 · by Alessandro</span></div>
+  <div class="wrap"><span>© 2026 Alessandro. All rights reserved.</span><span class="author">Tool Shell 1.6.1 · by Alessandro · <span data-t="other"></span> <a href="https://freddobook.ifree.page/" target="_blank" rel="noopener">FreddoBook ↗</a></span></div>
   <p class="legal" data-t="legal"></p>
 </footer>
 
 <script>
   // ===== Da impostare quando il sito va online =====
   const DOWNLOAD_URL = "https://github.com/alessandroCollection/toolshell/releases/latest/download/ToolShell_Setup_1.6.1.exe";   // installatore (GitHub Releases)
-  const SUPPORT_URL  = "#";   // link per il contributo (es. PayPal.me)
-  const PRICE        = ["1 €", "€1", "1 €", "1 €"];   // contributo minimo
+  const SUPPORT_URL  = "#";   // link per il caffè, es. "https://paypal.me/nome" (le cifre si aggiungono da sole: /3EUR)
+  // Modulo "Ricevi la chiave": Web3Forms inoltra la richiesta all'email dell'autore (che non compare nella pagina).
+  const FORM_KEY     = "821861a4-b42b-4443-af76-0de4ed306558";
 
   // Icone della libreria di Tool Shell (convertite in SVG, griglia 24x24).
   const ICONS = {"gear":'<path d="M12,15.5A3.5,3.5,0,0,1,8.5,12A3.5,3.5,0,0,1,12,8.5A3.5,3.5,0,0,1,15.5,12A3.5,3.5,0,0,1,12,15.5 M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12 19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22,21.78,8.95,21.66,8.73L19.66,5.27C19.54,5.05,19.27,4.96,19.05,5.05L16.56,6.05C16.04,5.66,15.5,5.32,14.87,5.07L14.5,2.42C14.46,2.18,14.25,2,14,2L10,2C9.75,2,9.54,2.18,9.5,2.42L9.13,5.07C8.5,5.32,7.96,5.66,7.44,6.05L4.95,5.05C4.73,4.96,4.46,5.05,4.34,5.27L2.34,8.73C2.21,8.95,2.27,9.22,2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12 4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78,2.21,15.05,2.34,15.27L4.34,18.73C4.46,18.95,4.73,19.03,4.95,18.95L7.44,17.94C7.96,18.34,8.5,18.68,9.13,18.93L9.5,21.58C9.54,21.82,9.75,22,10,22L14,22C14.25,22,14.46,21.82,14.5,21.58L14.87,18.93C15.5,18.67,16.04,18.34,16.56,17.94L19.05,18.95C19.27,19.03,19.54,18.95,19.66,18.73L21.66,15.27C21.78,15.05,21.73,14.78,21.54,14.63L19.43,12.97z" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
@@ -460,7 +494,7 @@
                "Tool Shell reúne tus programas en una única y preciosa pantalla. Un clic y listo.",
                "Tool Shell sammelt deine Programme auf einem wunderschönen Bildschirm. Ein Klick, und los."],
     download: ["Scarica per Windows", "Download for Windows", "Descargar para Windows", "Für Windows laden"],
-    support:  ["Sostieni l'autore ›", "Support the author ›", "Apoya al autor ›", "Unterstütze den Autor ›"],
+    support:  ["Offrimi un caffè ☕ ›", "Buy me a coffee ☕ ›", "Invítame a un café ☕ ›", "Spendier mir einen Kaffee ☕ ›"],
     meta:     ["Windows 10 e 11 · 64 bit · versione 1.6.1", "Windows 10 & 11 · 64-bit · version 1.6.1",
                "Windows 10 y 11 · 64 bits · versión 1.6.1", "Windows 10 & 11 · 64 Bit · Version 1.6.1"],
     scroll:   ["Scorri e guardala in azione", "Scroll to see it in action", "Desplázate y mírala en acción", "Scrolle und sieh sie in Aktion"],
@@ -538,28 +572,36 @@
     st3: ["sfondi per la shell", "shell backgrounds", "fondos para la shell", "Hintergründe"],
     st4: ["lingue", "languages", "idiomas", "Sprachen"],
 
-    p1a: ["Un prezzo piccolo.", "A small price.", "Un precio pequeño.", "Ein kleiner Preis."],
-    p1b: ["Per sostenere chi la crea.", "To support the one who makes it.", "Para apoyar a quien la crea.", "Für den, der sie macht."],
-    p1p: ["Tool Shell nasce dalla passione di un solo sviluppatore. Il tuo contributo aiuta a farla crescere.",
-          "Tool Shell is made with passion by a single developer. Your support keeps it going.",
-          "Tool Shell nace de la pasión de un solo desarrollador. Tu apoyo la ayuda a crecer.",
-          "Tool Shell entsteht mit Leidenschaft von einem einzigen Entwickler. Deine Unterstützung lässt sie wachsen."],
-    free: ["Contributo a piacere", "Pay what you want", "Aporte libre", "Zahl, was du willst"],
-    once: ["minimo", "minimum", "mínimo", "mindestens"],
-    pr1: ["Licenza personale a vita", "Personal lifetime license", "Licencia personal de por vida", "Persönliche Lizenz auf Lebenszeit"],
-    pr2: ["Per il tuo computer", "For your computer", "Para tu ordenador", "Für deinen Computer"],
-    pr3: ["Nessun abbonamento", "No subscription", "Sin suscripción", "Kein Abo"],
-    pr4: ["Un grazie sincero dall'autore", "A sincere thank-you from the author", "Un sincero gracias del autor", "Ein ehrliches Dankeschön vom Autor"],
-    supportBtn: ["Sostieni e ricevi la chiave", "Support & get your key", "Apoya y recibe tu clave", "Unterstützen & Schlüssel erhalten"],
-    pnote: ["Dopo il contributo inviaci il PC ID che vedi al primo avvio.", "After your support, send us the PC ID shown on first start.",
-            "Tras tu apoyo, envíanos el PC ID que ves al primer inicio.", "Nach deiner Unterstützung sende uns die PC-ID vom ersten Start."],
-    lt:  ["Pronta in tre passi.", "Ready in three steps.", "Lista en tres pasos.", "In drei Schritten bereit."],
+    p1a: ["Gratis. Davvero.", "Free. Really.", "Gratis. De verdad.", "Kostenlos. Wirklich."],
+    p1b: ["Ma un caffè fa sempre piacere.", "But a coffee is always welcome.", "Pero un café siempre se agradece.", "Aber ein Kaffee freut immer."],
+    beg: ["Lo so, è un programmino semplice. Forse anche un po' sciocco. Ma se ti ha messo in ordine il desktop o ti ha strappato un sorriso… offrimi un caffè. ☕",
+          "I know, it's a simple little program. Maybe even a bit silly. But if it tidied up your desktop or made you smile… buy me a coffee. ☕",
+          "Lo sé, es un programita sencillo. Quizá hasta un poco tonto. Pero si te ordenó el escritorio o te sacó una sonrisa… invítame a un café. ☕",
+          "Ich weiß, es ist ein einfaches kleines Programm. Vielleicht sogar ein bisschen albern. Aber wenn es deinen Desktop aufgeräumt oder dir ein Lächeln geschenkt hat… spendier mir einen Kaffee. ☕"],
+    anyAmt: ["Quanto vuoi", "Any amount", "Lo que quieras", "Was du willst"],
+    pnote: ["La chiave è gratis in ogni caso. Il caffè è solo se ti va.", "The key is free either way. The coffee is only if you feel like it.",
+            "La clave es gratis igualmente. El café, solo si te apetece.", "Der Schlüssel ist so oder so kostenlos. Der Kaffee nur, wenn du magst."],
+    lt:  ["Ricevi la tua chiave.", "Get your key.", "Recibe tu clave.", "Hol dir deinen Schlüssel."],
+    ltp: ["Compila il modulo: la chiave ti arriva per email.", "Fill in the form: your key arrives by email.",
+          "Rellena el formulario: la clave te llega por email.", "Füll das Formular aus: der Schlüssel kommt per E-Mail."],
+    fName: ["Nome", "Name", "Nombre", "Name"],
+    fEmail: ["Email (dove ricevi la chiave)", "Email (where your key goes)", "Email (donde recibes la clave)", "E-Mail (für den Schlüssel)"],
+    fPc:  ["PC ID (lo vedi al primo avvio di Tool Shell)", "PC ID (shown when Tool Shell first starts)", "PC ID (lo ves al primer inicio de Tool Shell)", "PC-ID (erscheint beim ersten Start von Tool Shell)"],
+    fMsg: ["Messaggio (facoltativo)", "Message (optional)", "Mensaje (opcional)", "Nachricht (optional)"],
+    fSend: ["Ricevi la chiave", "Get my key", "Recibir la clave", "Schlüssel anfordern"],
+    fSending: ["Invio…", "Sending…", "Enviando…", "Wird gesendet…"],
+    fOk:  ["Fatto! La chiave ti arriva per email. E se ti va… un caffè qui sopra. ☕", "Done! Your key is on its way by email. And if you like… a coffee above. ☕",
+           "¡Listo! La clave te llega por email. Y si quieres… un café aquí arriba. ☕", "Fertig! Dein Schlüssel kommt per E-Mail. Und wenn du magst… ein Kaffee oben. ☕"],
+    fErr: ["Ops, qualcosa non è andato. Riprova tra poco.", "Oops, something went wrong. Please try again shortly.",
+           "Vaya, algo salió mal. Inténtalo de nuevo en un momento.", "Hoppla, etwas ist schiefgelaufen. Bitte gleich nochmal versuchen."],
+    fBad: ["Controlla i campi in rosso.", "Please check the fields in red.", "Revisa los campos en rojo.", "Bitte die roten Felder prüfen."],
+    other: ["un altro lavoro dell'autore:", "another work by the author:", "otro trabajo del autor:", "ein weiteres Werk des Autors:"],
     l1t: ["Installa", "Install", "Instala", "Installieren"],
     l1:  ["Scarica e avvia l'installazione. Non servono permessi di amministratore.", "Download and run the installer. No admin rights needed.",
           "Descarga y ejecuta el instalador. Sin permisos de administrador.", "Herunterladen und installieren. Keine Adminrechte nötig."],
-    l2t: ["Invia il PC ID", "Send your PC ID", "Envía tu PC ID", "PC-ID senden"],
-    l2:  ["Al primo avvio compare il codice del tuo PC: copialo e mandacelo con il tuo nome.", "On first start you'll see your PC code: copy it and send it with your name.",
-          "Al primer inicio verás el código de tu PC: cópialo y envíalo con tu nombre.", "Beim ersten Start siehst du deinen PC-Code: kopiere ihn und sende ihn mit deinem Namen."],
+    l2t: ["Compila il modulo", "Fill in the form", "Rellena el formulario", "Formular ausfüllen"],
+    l2:  ["Al primo avvio premi Copy accanto al PC ID e incollalo nel modulo qui sopra.", "On first start press Copy next to the PC ID and paste it into the form above.",
+          "Al primer inicio pulsa Copy junto al PC ID y pégalo en el formulario de arriba.", "Beim ersten Start auf Copy neben der PC-ID drücken und oben ins Formular einfügen."],
     l3t: ["Incolla la chiave", "Paste your key", "Pega tu clave", "Schlüssel einfügen"],
     l3:  ["Incolla la chiave che ricevi e premi Register. Benvenuto.", "Paste the key you receive and press Register. Welcome.",
           "Pega la clave que recibes y pulsa Register. Bienvenido.", "Füge den Schlüssel ein und drücke Register. Willkommen."],
@@ -893,15 +935,56 @@
     L = Math.max(0, LANGS.indexOf(code));
     document.documentElement.lang = LANGS[L];
     document.querySelectorAll("[data-t]").forEach(el => { el.textContent = T[el.dataset.t][L]; });
-    $("priceValue").textContent = PRICE[L];
     document.querySelectorAll("#langs button").forEach(b => b.classList.toggle("on", b.dataset.l === LANGS[L]));
     try { localStorage.setItem("lang", LANGS[L]); } catch (e) {}
     if (st) render();
   }
   document.querySelectorAll("#langs button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.l)));
   document.querySelectorAll("a.download").forEach(a => a.href = DOWNLOAD_URL);
-  // Finché il link del contributo non c'è, il pulsante non compare (niente pulsanti che non portano da nessuna parte).
-  document.querySelectorAll("a.support").forEach(a => { a.href = SUPPORT_URL; if (SUPPORT_URL === "#") a.style.display = "none"; });
+  // Caffè: finché il link PayPal non c'è, i pulsanti non compaiono (niente pulsanti che non portano da nessuna parte).
+  const hasPay = SUPPORT_URL !== "#";
+  document.querySelectorAll("a.support").forEach(a => { a.href = "#price"; if (!hasPay) a.style.display = "none"; });
+  if (!hasPay) $("coffees").style.display = "none";
+  document.querySelectorAll(".cbtn").forEach(b => {
+    b.href = SUPPORT_URL.replace(/\/$/, "") + (b.dataset.amt ? "/" + b.dataset.amt + "EUR" : "");
+    b.target = "_blank"; b.rel = "noopener";
+  });
+
+  // Modulo "Ricevi la chiave"
+  const kform = $("kform"), kmsg = $("kmsg"), ksend = $("ksend");
+  const pc = kform.elements.pcid;
+  pc.addEventListener("input", () => {
+    // Formato automatico XXXX-XXXX-XXXX mentre si scrive o si incolla
+    const raw = pc.value.toUpperCase().replace(/[^0-9A-F]/g, "").slice(0, 12);
+    pc.value = raw.match(/.{1,4}/g)?.join("-") || "";
+  });
+  kform.addEventListener("submit", async e => {
+    e.preventDefault();
+    const f = kform.elements;
+    const checks = [[f.name, f.name.value.trim().length > 1], [f.email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())],
+                    [f.pcid, /^[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}$/.test(f.pcid.value)]];
+    checks.forEach(([el, ok]) => el.classList.toggle("bad", !ok));
+    if (checks.some(c => !c[1])) { kmsg.className = "kmsg wide err"; kmsg.textContent = t("fBad"); return; }
+    ksend.disabled = true; ksend.firstElementChild.textContent = t("fSending"); kmsg.textContent = "";
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: FORM_KEY, subject: "Tool Shell - richiesta chiave " + f.pcid.value, from_name: "Tool Shell",
+          name: f.name.value.trim(), email: f.email.value.trim(), "PC ID": f.pcid.value,
+          message: f.message.value.trim() || "-", language: LANGS[L], botcheck: f.botcheck.checked,
+        }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
+      kform.reset();
+      kmsg.className = "kmsg wide ok"; kmsg.textContent = t("fOk");
+    } catch (err) {
+      kmsg.className = "kmsg wide err"; kmsg.textContent = t("fErr");
+    } finally {
+      ksend.disabled = false; ksend.firstElementChild.textContent = t("fSend");
+    }
+  });
   let saved = null;
   try { saved = localStorage.getItem("lang"); } catch (e) {}
   setLang(saved || (navigator.language || "en").slice(0, 2).toLowerCase());
