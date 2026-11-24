@@ -244,6 +244,7 @@
   .kform { max-width: 620px; margin: 44px auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left;
            padding: 30px; border-radius: 28px; background: var(--panel); border: 1px solid var(--border); }
   .kform .wide { grid-column: 1 / -1; }
+  .kform label { display: flex; flex-direction: column; justify-content: flex-end; }
   .kform label span { display: block; font-size: 13px; font-weight: 600; color: var(--subtle); margin-bottom: 6px; }
   .kform input, .kform textarea { width: 100%; font: inherit; font-size: 16px; color: var(--text); background: #0A0F1E; border: 1px solid #2A3552;
            border-radius: 12px; padding: 12px 14px; outline: none; transition: border-color .2s, box-shadow .2s; resize: vertical; }
@@ -584,7 +585,8 @@
     lt:  ["Ricevi la tua chiave.", "Get your key.", "Recibe tu clave.", "Hol dir deinen Schlüssel."],
     ltp: ["Compila il modulo: la chiave ti arriva per email.", "Fill in the form: your key arrives by email.",
           "Rellena el formulario: la clave te llega por email.", "Füll das Formular aus: der Schlüssel kommt per E-Mail."],
-    fName: ["Nome", "Name", "Nombre", "Name"],
+    fName: ["Nome (anche inventato: comparirà nelle Info del programma)", "Name (any name you like: it shows in the program's Info)",
+            "Nombre (el que quieras: aparecerá en la Info del programa)", "Name (gern erfunden: erscheint in der Programm-Info)"],
     fEmail: ["Email (dove ricevi la chiave)", "Email (where your key goes)", "Email (donde recibes la clave)", "E-Mail (für den Schlüssel)"],
     fPc:  ["PC ID (lo vedi al primo avvio di Tool Shell)", "PC ID (shown when Tool Shell first starts)", "PC ID (lo ves al primer inicio de Tool Shell)", "PC-ID (erscheint beim ersten Start von Tool Shell)"],
     fMsg: ["Messaggio (facoltativo)", "Message (optional)", "Mensaje (opcional)", "Nachricht (optional)"],
