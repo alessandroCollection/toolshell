@@ -254,7 +254,15 @@
   .kform button { justify-content: center; border: 0; cursor: pointer; font: inherit; font-size: 17px; font-weight: 600; color: #fff; }
   .kform button:disabled { opacity: .6; cursor: wait; }
   .kform label.check { flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px; cursor: pointer; }
-  .kform label.check input { width: 20px; height: 20px; flex: none; accent-color: #6366F1; cursor: pointer; }
+  /* interruttore scuro (come quello di blocco nella shell) */
+  .kform label.check input { appearance: none; -webkit-appearance: none; position: relative; flex: none; cursor: pointer; margin: 0;
+           width: 44px; height: 24px; border-radius: 12px; padding: 0; background: #1A2440; border: 1px solid #3A4A72; transition: background .3s, border-color .3s; }
+  .kform label.check input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%;
+           background: #fff; transition: transform .35s cubic-bezier(.34,1.5,.5,1); }
+  .kform label.check input:checked { background: linear-gradient(135deg, var(--a1), var(--a2)); border-color: transparent; }
+  .kform label.check input:checked::after { transform: translateX(20px); }
+  .kform label.check input:focus-visible { box-shadow: 0 0 0 3px rgba(96,165,250,.3); }
+  .kform label.check:hover input:not(:checked) { border-color: #60A5FA; }
   .kform label.check span { margin: 0; font-size: 15px; color: #CBD5E1; }
   .kmsg { min-height: 1.4em; text-align: center; font-weight: 600; }
   .kmsg.ok { color: #4ADE80; } .kmsg.err { color: #F87171; }
