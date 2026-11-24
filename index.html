@@ -253,6 +253,9 @@
   .kform .bad { border-color: #F87171; }
   .kform button { justify-content: center; border: 0; cursor: pointer; font: inherit; font-size: 17px; font-weight: 600; color: #fff; }
   .kform button:disabled { opacity: .6; cursor: wait; }
+  .kform label.check { flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px; cursor: pointer; }
+  .kform label.check input { width: 20px; height: 20px; flex: none; accent-color: #6366F1; cursor: pointer; }
+  .kform label.check span { margin: 0; font-size: 15px; color: #CBD5E1; }
   .kmsg { min-height: 1.4em; text-align: center; font-weight: 600; }
   .kmsg.ok { color: #4ADE80; } .kmsg.err { color: #F87171; }
   .hp { display: none; }
@@ -427,6 +430,7 @@
     <label><span data-t="fEmail"></span><input name="email" type="email" required maxlength="100" autocomplete="email"></label>
     <label class="wide"><span data-t="fPc"></span><input name="pcid" required placeholder="XXXX-XXXX-XXXX" maxlength="14" autocomplete="off" spellcheck="false"></label>
     <label class="wide"><span data-t="fMsg"></span><textarea name="message" rows="3" maxlength="500"></textarea></label>
+    <label class="wide check"><input type="checkbox" name="news"><span data-t="fNews"></span></label>
     <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
     <button class="btn primary wide" type="submit" id="ksend"><span data-t="fSend"></span></button>
     <p class="kmsg wide" id="kmsg"></p>
@@ -591,6 +595,8 @@
     fEmail: ["Email (dove ricevi la chiave)", "Email (where your key goes)", "Email (donde recibes la clave)", "E-Mail (für den Schlüssel)"],
     fPc:  ["PC ID (lo vedi al primo avvio di Tool Shell)", "PC ID (shown when Tool Shell first starts)", "PC ID (lo ves al primer inicio de Tool Shell)", "PC-ID (erscheint beim ersten Start von Tool Shell)"],
     fMsg: ["Messaggio (facoltativo)", "Message (optional)", "Mensaje (opcional)", "Nachricht (optional)"],
+    fNews: ["Avvisami delle novità (poche email, promesso)", "Let me know about news (few emails, promise)",
+            "Avísame de las novedades (pocos emails, prometido)", "Über Neuigkeiten informieren (wenige E-Mails, versprochen)"],
     fSend: ["Ricevi la chiave", "Get my key", "Recibir la clave", "Schlüssel anfordern"],
     fSending: ["Invio…", "Sending…", "Enviando…", "Wird gesendet…"],
     fOk:  ["Fatto! La chiave ti arriva per email. Ti piace? Dillo a un amico 🙂", "Done! Your key is on its way by email. Like it? Tell a friend 🙂",
@@ -983,7 +989,8 @@
         body: JSON.stringify({
           access_key: FORM_KEY, subject: "Tool Shell - richiesta chiave " + f.pcid.value, from_name: "Tool Shell",
           name: f.name.value.trim(), email: f.email.value.trim(), "PC ID": f.pcid.value,
-          message: f.message.value.trim() || "-", language: LANGS[L], botcheck: f.botcheck.checked,
+          message: f.message.value.trim() || "-", "Avvisami novità": f.news.checked ? "SÌ" : "no",
+          language: LANGS[L], botcheck: f.botcheck.checked,
         }),
       });
       const data = await res.json();
