@@ -230,15 +230,15 @@
   .price { max-width: 520px; margin: 60px auto 0; text-align: center; padding: 46px 36px; border-radius: 32px;
            background: linear-gradient(var(--panel), var(--panel)) padding-box, linear-gradient(135deg, var(--a1), var(--a2), var(--a3)) border-box;
            border: 1.5px solid transparent; box-shadow: 0 30px 80px rgba(99,102,241,.25); }
-  .cup { width: 84px; height: 84px; }
-  .cup .steam { animation: steam 2.4s ease-in-out infinite; }
-  @keyframes steam { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: .9; } 100% { opacity: 0; transform: translateY(-6px); } }
+  .heart { width: 50px; height: 50px; animation: beat 1.6s ease-in-out infinite; }
+  @keyframes beat { 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } 60% { transform: none; } }
   .beg { color: #CBD5E1; font-size: 17px; line-height: 1.55; margin: 16px auto 26px; max-width: 420px; }
-  .coffees { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .cbtn { cursor: pointer; padding: 14px 6px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid var(--border);
-          display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 700; transition: transform .2s, border-color .2s, background .2s; }
-  .cbtn b { font-size: 24px; } .cbtn span { font-size: 14px; }
-  .cbtn:hover { transform: translateY(-4px) scale(1.04); border-color: rgba(255,154,60,.6); background: rgba(255,154,60,.12); }
+  .shares { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .sbtn { cursor: pointer; padding: 14px 4px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid var(--border); color: var(--sc);
+          display: flex; flex-direction: column; align-items: center; gap: 6px; font-weight: 600; transition: transform .2s, border-color .2s, background .2s; }
+  .sbtn svg { width: 26px; height: 26px; }
+  .sbtn span { font-size: 12.5px; color: #E2E8F0; }
+  .sbtn:hover { transform: translateY(-4px) scale(1.05); border-color: var(--sc); background: rgba(255,255,255,.09); }
   .note { font-size: 14px; color: var(--subtle); margin-top: 18px; }
   /* modulo chiave */
   .kform { max-width: 620px; margin: 44px auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; text-align: left;
@@ -258,7 +258,7 @@
   .hp { display: none; }
   .author a { color: var(--a1); }
   .author a:hover { text-decoration: underline; }
-  @media (max-width: 560px) { .kform { grid-template-columns: 1fr; padding: 22px; } .coffees { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .kform { grid-template-columns: 1fr; padding: 22px; } .shares { grid-template-columns: repeat(3, 1fr); } }
 
   /* ---------- Passi ---------- */
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 60px; text-align: left; }
@@ -341,7 +341,7 @@
     <p class="lead" data-t="lead"></p>
     <div class="cta">
       <a class="btn primary download" href="#"><svg><use href="#i-dl"/></svg><span data-t="download"></span></a>
-      <a class="btn link" href="#price" data-t="support"></a>
+      <a class="btn link" href="#share" data-t="support"></a>
     </div>
     <p class="meta" data-t="meta"></p>
     <div class="scrollhint"><i></i><span data-t="scroll"></span></div>
@@ -401,22 +401,18 @@
   </div>
 </section>
 
-<!-- Gratis + "offrimi un caffè" -->
-<section class="big wrap" id="price">
+<!-- Gratis + passaparola -->
+<section class="big wrap" id="share">
   <h2 class="rv"><span data-t="p1a"></span><br><span class="grad" data-t="p1b"></span></h2>
   <div class="price rv">
-    <svg class="cup" viewBox="0 0 64 64">
-      <path class="steam" d="M24 18c-3-4 3-6 0-10M32 18c-3-4 3-6 0-10M40 18c-3-4 3-6 0-10" fill="none" stroke="#CBD5E1" stroke-width="2.4" stroke-linecap="round"/>
-      <path d="M12 24h36v14a14 14 0 01-14 14h-8a14 14 0 01-14-14z" fill="url(#lg-rk)"/>
-      <path d="M48 28h3a6 6 0 010 12h-3" fill="none" stroke="#FF9A3C" stroke-width="4"/>
-      <ellipse cx="30" cy="56" rx="24" ry="3.5" fill="#334155"/>
-    </svg>
+    <svg class="heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.3C1 8 3.4 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.6 0 6 3.5 4.5 7.2C19.5 16.4 12 21 12 21z" fill="url(#lg-rk)"/></svg>
     <p class="beg" data-t="beg"></p>
-    <div class="coffees" id="coffees">
-      <a class="cbtn" data-amt="1"><b>☕</b><span>1 €</span></a>
-      <a class="cbtn" data-amt="3"><b>☕☕</b><span>3 €</span></a>
-      <a class="cbtn" data-amt="5"><b>🍕</b><span>5 €</span></a>
-      <a class="cbtn" data-amt=""><b>💝</b><span data-t="anyAmt"></span></a>
+    <div class="shares">
+      <a class="sbtn" data-net="wa" style="--sc:#25D366"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1112 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 01-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 00-.7.3 3 3 0 00-.9 2.2 5.2 5.2 0 001.1 2.7 11.8 11.8 0 004.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.3z"/></svg><span>WhatsApp</span></a>
+      <a class="sbtn" data-net="tg" style="--sc:#29A9EB"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M21.9 4.3L18.8 19c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.2.2-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.9 13 2.4 11.6c-1-.3-1-1 .2-1.5l17.9-6.9c.8-.3 1.6.2 1.4 1.1z"/></svg><span>Telegram</span></a>
+      <a class="sbtn" data-net="fb" style="--sc:#1877F2"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M14 8V6.2c0-.8.2-1.2 1.4-1.2H17V2h-2.6C11.3 2 10 3.5 10 6v2H8v3h2v11h4V11h2.7l.3-3z"/></svg><span>Facebook</span></a>
+      <a class="sbtn" data-net="x" style="--sc:#E7E9EA"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.9zm-1.1 16.2h1.7L7.4 4.7H5.6z"/></svg><span>X</span></a>
+      <a class="sbtn" data-net="copy" style="--sc:#A5B4FC"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1M14 10a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg><span id="copyLbl" data-t="copy"></span></a>
     </div>
     <p class="note" data-t="pnote"></p>
   </div>
@@ -457,7 +453,7 @@
 <script>
   // ===== Da impostare quando il sito va online =====
   const DOWNLOAD_URL = "https://github.com/alessandroCollection/toolshell/releases/latest/download/ToolShell_Setup_1.6.1.exe";   // installatore (GitHub Releases)
-  const SUPPORT_URL  = "#";   // link per il caffè, es. "https://paypal.me/nome" (le cifre si aggiungono da sole: /3EUR)
+  const SITE_URL     = "https://alessandrocollection.github.io/toolshell/";   // link che si condivide
   // Modulo "Ricevi la chiave": Web3Forms inoltra la richiesta all'email dell'autore (che non compare nella pagina).
   const FORM_KEY     = "821861a4-b42b-4443-af76-0de4ed306558";
 
@@ -495,7 +491,7 @@
                "Tool Shell reúne tus programas en una única y preciosa pantalla. Un clic y listo.",
                "Tool Shell sammelt deine Programme auf einem wunderschönen Bildschirm. Ein Klick, und los."],
     download: ["Scarica per Windows", "Download for Windows", "Descargar para Windows", "Für Windows laden"],
-    support:  ["Offrimi un caffè ☕ ›", "Buy me a coffee ☕ ›", "Invítame a un café ☕ ›", "Spendier mir einen Kaffee ☕ ›"],
+    support:  ["Dillo a un amico ›", "Tell a friend ›", "Cuéntaselo a un amigo ›", "Sag's weiter ›"],
     meta:     ["Windows 10 e 11 · 64 bit · versione 1.6.1", "Windows 10 & 11 · 64-bit · version 1.6.1",
                "Windows 10 y 11 · 64 bits · versión 1.6.1", "Windows 10 & 11 · 64 Bit · Version 1.6.1"],
     scroll:   ["Scorri e guardala in azione", "Scroll to see it in action", "Desplázate y mírala en acción", "Scrolle und sieh sie in Aktion"],
@@ -574,14 +570,19 @@
     st4: ["lingue", "languages", "idiomas", "Sprachen"],
 
     p1a: ["Gratis. Davvero.", "Free. Really.", "Gratis. De verdad.", "Kostenlos. Wirklich."],
-    p1b: ["Ma un caffè fa sempre piacere.", "But a coffee is always welcome.", "Pero un café siempre se agradece.", "Aber ein Kaffee freut immer."],
-    beg: ["Lo so, è un programmino semplice. Forse anche un po' sciocco. Ma se ti ha messo in ordine il desktop o ti ha strappato un sorriso… offrimi un caffè. ☕",
-          "I know, it's a simple little program. Maybe even a bit silly. But if it tidied up your desktop or made you smile… buy me a coffee. ☕",
-          "Lo sé, es un programita sencillo. Quizá hasta un poco tonto. Pero si te ordenó el escritorio o te sacó una sonrisa… invítame a un café. ☕",
-          "Ich weiß, es ist ein einfaches kleines Programm. Vielleicht sogar ein bisschen albern. Aber wenn es deinen Desktop aufgeräumt oder dir ein Lächeln geschenkt hat… spendier mir einen Kaffee. ☕"],
-    anyAmt: ["Quanto vuoi", "Any amount", "Lo que quieras", "Was du willst"],
-    pnote: ["La chiave è gratis in ogni caso. Il caffè è solo se ti va.", "The key is free either way. The coffee is only if you feel like it.",
-            "La clave es gratis igualmente. El café, solo si te apetece.", "Der Schlüssel ist so oder so kostenlos. Der Kaffee nur, wenn du magst."],
+    p1b: ["Ti piace? Dillo a un amico.", "Like it? Tell a friend.", "¿Te gusta? Cuéntaselo a un amigo.", "Gefällt's dir? Sag's weiter."],
+    beg: ["Lo so, è un programmino semplice. Forse anche un po' sciocco. Ma se ti ha messo in ordine il desktop o ti ha strappato un sorriso… passalo a qualcuno. 🙂",
+          "I know, it's a simple little program. Maybe even a bit silly. But if it tidied up your desktop or made you smile… pass it on. 🙂",
+          "Lo sé, es un programita sencillo. Quizá hasta un poco tonto. Pero si te ordenó el escritorio o te sacó una sonrisa… pásalo. 🙂",
+          "Ich weiß, es ist ein einfaches kleines Programm. Vielleicht sogar ein bisschen albern. Aber wenn es deinen Desktop aufgeräumt oder dir ein Lächeln geschenkt hat… gib es weiter. 🙂"],
+    copy:   ["Copia link", "Copy link", "Copiar enlace", "Link kopieren"],
+    copied: ["Copiato!", "Copied!", "¡Copiado!", "Kopiert!"],
+    shareText: ["Guarda Tool Shell: tutte le tue app in una schermata, come il Launchpad. Gratis!",
+                "Check out Tool Shell: all your apps on one screen, like Launchpad. Free!",
+                "Mira Tool Shell: todas tus apps en una pantalla, como Launchpad. ¡Gratis!",
+                "Schau dir Tool Shell an: alle Apps auf einem Bildschirm, wie Launchpad. Kostenlos!"],
+    pnote: ["Il passaparola è il regalo più bello per chi crea qualcosa da solo.", "Word of mouth is the best gift for someone who builds things alone.",
+            "El boca a boca es el mejor regalo para quien crea algo solo.", "Mundpropaganda ist das schönste Geschenk für jemanden, der allein etwas baut."],
     lt:  ["Ricevi la tua chiave.", "Get your key.", "Recibe tu clave.", "Hol dir deinen Schlüssel."],
     ltp: ["Compila il modulo: la chiave ti arriva per email.", "Fill in the form: your key arrives by email.",
           "Rellena el formulario: la clave te llega por email.", "Füll das Formular aus: der Schlüssel kommt per E-Mail."],
@@ -592,8 +593,8 @@
     fMsg: ["Messaggio (facoltativo)", "Message (optional)", "Mensaje (opcional)", "Nachricht (optional)"],
     fSend: ["Ricevi la chiave", "Get my key", "Recibir la clave", "Schlüssel anfordern"],
     fSending: ["Invio…", "Sending…", "Enviando…", "Wird gesendet…"],
-    fOk:  ["Fatto! La chiave ti arriva per email. E se ti va… un caffè qui sopra. ☕", "Done! Your key is on its way by email. And if you like… a coffee above. ☕",
-           "¡Listo! La clave te llega por email. Y si quieres… un café aquí arriba. ☕", "Fertig! Dein Schlüssel kommt per E-Mail. Und wenn du magst… ein Kaffee oben. ☕"],
+    fOk:  ["Fatto! La chiave ti arriva per email. Ti piace? Dillo a un amico 🙂", "Done! Your key is on its way by email. Like it? Tell a friend 🙂",
+           "¡Listo! La clave te llega por email. ¿Te gusta? Cuéntaselo a un amigo 🙂", "Fertig! Dein Schlüssel kommt per E-Mail. Gefällt's dir? Sag's weiter 🙂"],
     fErr: ["Ops, qualcosa non è andato. Riprova tra poco.", "Oops, something went wrong. Please try again shortly.",
            "Vaya, algo salió mal. Inténtalo de nuevo en un momento.", "Hoppla, etwas ist schiefgelaufen. Bitte gleich nochmal versuchen."],
     fBad: ["Controlla i campi in rosso.", "Please check the fields in red.", "Revisa los campos en rojo.", "Bitte die roten Felder prüfen."],
@@ -943,14 +944,22 @@
   }
   document.querySelectorAll("#langs button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.l)));
   document.querySelectorAll("a.download").forEach(a => a.href = DOWNLOAD_URL);
-  // Caffè: finché il link PayPal non c'è, i pulsanti non compaiono (niente pulsanti che non portano da nessuna parte).
-  const hasPay = SUPPORT_URL !== "#";
-  document.querySelectorAll("a.support").forEach(a => { a.href = "#price"; if (!hasPay) a.style.display = "none"; });
-  if (!hasPay) $("coffees").style.display = "none";
-  document.querySelectorAll(".cbtn").forEach(b => {
-    b.href = SUPPORT_URL.replace(/\/$/, "") + (b.dataset.amt ? "/" + b.dataset.amt + "EUR" : "");
-    b.target = "_blank"; b.rel = "noopener";
-  });
+  // Passaparola: ogni pulsante apre la condivisione con un testo già pronto nella lingua scelta
+  document.querySelectorAll(".sbtn").forEach(b => b.addEventListener("click", async e => {
+    e.preventDefault();
+    const url = encodeURIComponent(SITE_URL), text = encodeURIComponent(t("shareText"));
+    const links = {
+      wa: `https://wa.me/?text=${text}%20${url}`,
+      tg: `https://t.me/share/url?url=${url}&text=${text}`,
+      fb: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      x:  `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+    };
+    if (b.dataset.net !== "copy") { window.open(links[b.dataset.net], "_blank", "noopener"); return; }
+    try { await navigator.clipboard.writeText(SITE_URL); } catch (err) { prompt("", SITE_URL); return; }
+    const lbl = $("copyLbl");
+    lbl.textContent = t("copied");
+    setTimeout(() => lbl.textContent = t("copy"), 1800);
+  }));
 
   // Modulo "Ricevi la chiave"
   const kform = $("kform"), kmsg = $("kmsg"), ksend = $("ksend");
